@@ -1,10 +1,12 @@
 import pygame as pg
+import random
 
 pg.init()
 
 WHITE = (255,255,255)
 BLACK = (0,0,0)
 RED   = (255, 0, 0)
+GREEN = (0, 255, 0)
 
 WIDTH = 600
 HEIGHT = 600
@@ -20,8 +22,11 @@ pg.draw.line(grid, WHITE, (0, 200), (600, 200), 5)
 pg.draw.line(grid, WHITE, (0, 400), (600, 400), 5)
 
 cross = pg.Surface((180, 180))
-pg.draw.line(cross, RED, (0, 0), (180, 180), 5)
-pg.draw.line(cross, RED, (180, 0), (0, 180), 5)
+pg.draw.line(cross, GREEN, (0, 0), (180, 180), 5)
+pg.draw.line(cross, GREEN, (180, 0), (0, 180), 5)
+
+circle = pg.Surface((180, 180))
+pg.draw.circle(circle, RED, (90, 90), 90, 5)
 
 gameboard = [[" ", " ", " "],
              [" ", " ", " "],
@@ -43,20 +48,27 @@ while running:
                 gameboard_x = x // 200
                 gameboard_y = y // 200
                 if gameboard[gameboard_y][gameboard_x] == " ":
-                    #pg.draw.line(cross, RED, (gameboard_x * 200, gameboard_y * 200), (gameboard_x * 200 + 200, gameboard_y * 200 + 200), 5)
                     gameboard[gameboard_y][gameboard_x] = "x"
+                    placed = False
+                    empty_spaces = []
+                    for row in gameboard:
+                        for letter in row:
+                            empty_spaces.append(letter == " ")
+                    print(empty_spaces)
+                    while (not placed) and any(empty_spaces):
+                        computer_x = random.randint(0, 2)
+                        computer_y  = random.randint(0, 2)
+                        if gameboard[computer_y][computer_x] == " ":
+                            gameboard[computer_y][computer_x] = "o"
+                            placed = True
                     print(gameboard)
-#TODO: Kolla musens koordinater, därefter kolla om något är ritat i rutan
-        
-# floordiv av koordinat y och x med 200 separat (if value == 0, 1 eller 2 sätt i olika rutor)
     screen.fill(BLACK)
     screen.blit(grid, (0,0))
     for y, row in enumerate(gameboard):
         for x, value in enumerate(row):
             if value == "x":
                 screen.blit(cross, (x * 200 + 10, y * 200 + 10))
-
-
-    # Utför beräkningar
-    # Uppdatera positioner
+            elif value == "o":
+                screen.blit(circle, (x * 200 + 10, y * 200 + 10))
+    #TODO: Add circle for computer and fix so that you only can place 3 
     pg.display.flip()
