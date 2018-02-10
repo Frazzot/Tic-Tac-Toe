@@ -18,6 +18,10 @@ pg.draw.line(grid, WHITE, (400, 0), (400, 600), 5)
 pg.draw.line(grid, WHITE, (0, 200), (600, 200), 5)
 pg.draw.line(grid, WHITE, (0, 400), (600, 400), 5)
 
+gameboard = [[" ", " ", " "],
+             [" ", " ", " "],
+             [" ", " ", " "]]
+# gameboard[y][x]
 running = True
 while running:
     # Event loop, hämtar input 
@@ -27,12 +31,13 @@ while running:
         elif event.type == pg.KEYDOWN:
             if event.key == pg.K_ESCAPE:
                 running = False
-        #elif event.type == pg.MOUSEBUTTONDOWN:
-            #for x in range (0, 200, 200):
-                #pg.mouse.get_pos() = 
-            #if pg.mouse.get_pos() == 
+        elif event.type == pg.MOUSEBUTTONDOWN:
+                pos = pg.mouse.get_pos()
+                pos[0] = 
+                pos[1] = 
 #TODO: Kolla musens koordinater, därefter kolla om något är ritat i rutan
         
+# floordiv av koordinat y och x med 200 separat (if value == 0, 1 eller 2 sätt i olika rutor)
 
     # Utför beräkningar
     # Uppdatera positioner
