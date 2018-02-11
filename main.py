@@ -31,6 +31,8 @@ pg.draw.circle(circle, RED, (90, 90), 90, 5)
 gameboard = [[" ", " ", " "],
              [" ", " ", " "],
              [" ", " ", " "]]
+
+crosses_placed = 0
 # gameboard[y][x]
 running = True
 while running:
@@ -47,21 +49,20 @@ while running:
                 y = pos[1]
                 gameboard_x = x // 200
                 gameboard_y = y // 200
-                if gameboard[gameboard_y][gameboard_x] == " ":
-                    gameboard[gameboard_y][gameboard_x] = "x"
-                    placed = False
-                    empty_spaces = []
-                    for row in gameboard:
-                        for letter in row:
-                            empty_spaces.append(letter == " ")
-                    print(empty_spaces)
-                    while (not placed) and any(empty_spaces):
-                        computer_x = random.randint(0, 2)
-                        computer_y  = random.randint(0, 2)
-                        if gameboard[computer_y][computer_x] == " ":
-                            gameboard[computer_y][computer_x] = "o"
-                            placed = True
-                    print(gameboard)
+                if crosses_placed < 3:
+                    if gameboard[gameboard_y][gameboard_x] == " ":
+                        gameboard[gameboard_y][gameboard_x] = "x"
+                        crosses_placed += 1
+                        placed = False
+                        while not placed:
+                            computer_x = random.randint(0, 2)
+                            computer_y  = random.randint(0, 2)
+                            if gameboard[computer_y][computer_x] == " ":
+                                gameboard[computer_y][computer_x] = "o"
+                                placed = True
+                        print(gameboard)
+                else:
+                    pass
     screen.fill(BLACK)
     screen.blit(grid, (0,0))
     for y, row in enumerate(gameboard):
