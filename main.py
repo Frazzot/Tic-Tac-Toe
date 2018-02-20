@@ -33,6 +33,7 @@ gameboard = [[" ", " ", " "],
              [" ", " ", " "]]
 
 crosses_placed = 0
+is_selecting = True
 # gameboard[y][x]
 running = True
 while running:
@@ -62,7 +63,18 @@ while running:
                                 placed = True
                         print(gameboard)
                 else:
-                    pass
+                    if is_selecting:
+                        if gameboard[gameboard_y][gameboard_x] == "x":
+                            gameboard[gameboard_y][gameboard_x] = " "
+                            is_selecting = False
+                    else:
+                        gameboard[gameboard_y][gameboard_x] = "x"
+                        is_selecting = True
+                    # Hämta nytt input från musen (klickar på vilken man vill flytta sedan klickar på rutan som ska flyttas till)
+
+#TODO: Kolla upp varför gameboard_x ej är definerat
+
+
     screen.fill(BLACK)
     screen.blit(grid, (0,0))
     for y, row in enumerate(gameboard):
@@ -71,5 +83,5 @@ while running:
                 screen.blit(cross, (x * 200 + 10, y * 200 + 10))
             elif value == "o":
                 screen.blit(circle, (x * 200 + 10, y * 200 + 10))
-    #TODO: Add circle for computer and fix so that you only can place 3 
+    #TODO: Välja vilken man vill flytta och även flytta motståndaren 
     pg.display.flip()
