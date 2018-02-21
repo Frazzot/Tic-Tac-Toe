@@ -29,15 +29,16 @@ circle = pg.Surface((180, 180))
 pg.draw.circle(circle, RED, (90, 90), 90, 5)
 
 menu = pg.Surface((400, 400))
-pg.draw.rect(menu, WHITE, pg.Rect(200, 200, 400, 400), 0)
+pg.draw.rect(menu, WHITE, pg.Rect(0, 0, 400, 400), 0)
 
+# gameboard[y][x]
 gameboard = [[" ", " ", " "],
              [" ", " ", " "],
              [" ", " ", " "]]
 
 crosses_placed = 0
+menu_open = False
 is_selecting = True
-# gameboard[y][x]
 running = True
 while running:
     # Event loop, hämtar input 
@@ -46,7 +47,7 @@ while running:
             running = False
         elif event.type == pg.KEYDOWN:
             if event.key == pg.K_ESCAPE:
-                running = False
+                menu_open = True
         elif event.type == pg.MOUSEBUTTONDOWN:
                 pos = pg.mouse.get_pos()
                 x = pos[0]
@@ -113,10 +114,6 @@ while running:
                     elif diagonal == ["o", "o", "o"]:
                         print("Enemy won")
 
-
-#TODO: Fixa så när man vinner börjar den om och en ruta kommer upp som visar att man har vunnit
-#TODO: Fixa svårighetsgrader och även ett inteface för att välja (enkel- random, mellan- och svår- )
-    
     screen.fill(BLACK)
     screen.blit(grid, (0,0))
     for y, row in enumerate(gameboard):
@@ -125,5 +122,10 @@ while running:
                 screen.blit(cross, (x * 200 + 10, y * 200 + 10))
             elif value == "o":
                 screen.blit(circle, (x * 200 + 10, y * 200 + 10))
- 
+    if menu_open == True:
+        screen.blit(menu, (100, 100))
+
     pg.display.flip()
+
+#TODO: Fixa så när man vinner börjar den om och en ruta kommer upp som visar att man har vunnit
+#TODO: Fixa svårighetsgrader och även ett inteface för att välja (enkel- random, mellan- och svår- )
