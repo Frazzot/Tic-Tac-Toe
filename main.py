@@ -28,16 +28,12 @@ pg.draw.line(cross, GREEN, (180, 0), (0, 180), 5)
 circle = pg.Surface((180, 180))
 pg.draw.circle(circle, RED, (90, 90), 90, 5)
 
+menu = pg.Surface((400, 400))
+pg.draw.rect(menu, WHITE, pg.Rect(200, 200, 400, 400), 0)
+
 gameboard = [[" ", " ", " "],
              [" ", " ", " "],
              [" ", " ", " "]]
-
-vert_gameboard = [[gameboard[0][0], gameboard[1][0], gameboard[2][0]],
-                  [gameboard[1][0], gameboard[1][1], gameboard[1][2]],
-                  [gameboard[2][0], gameboard[2][1], gameboard[2][2]]]
-
-diagonals = [[gameboard[0][0], gameboard[1][1], gameboard[2][2]],
-             [gameboard[0][2], gameboard[1][1], gameboard[2][0]]]
 
 crosses_placed = 0
 is_selecting = True
@@ -94,6 +90,30 @@ while running:
                         gameboard[c_y_NEW][c_x_NEW] = "o"
                         print(gameboard)
 
+                vert_gameboard = [[gameboard[0][0], gameboard[1][0], gameboard[2][0]],
+                                  [gameboard[0][1], gameboard[1][1], gameboard[2][1]],
+                                  [gameboard[0][2], gameboard[1][2], gameboard[2][2]]]
+
+                diagonal_gameboard = [[gameboard[0][0], gameboard[1][1], gameboard[2][2]],
+                                      [gameboard[0][2], gameboard[1][1], gameboard[2][0]]]
+
+                for row in gameboard:
+                    if row == ["x", "x", "x"]:
+                        print("You won")
+                    elif row == ["o", "o", "o"]:
+                            print("Enemy won")
+                for column in vert_gameboard:
+                    if column == ["x", "x", "x"]:
+                        print("You won")
+                    elif column == ["o", "o", "o"]:
+                        print("Enemy won")
+                for diagonal in diagonal_gameboard:
+                    if diagonal == ["x", "x", "x"]:
+                        print("You won")
+                    elif diagonal == ["o", "o", "o"]:
+                        print("Enemy won")
+
+
 #TODO: Fixa så när man vinner börjar den om och en ruta kommer upp som visar att man har vunnit
 #TODO: Fixa svårighetsgrader och även ett inteface för att välja (enkel- random, mellan- och svår- )
     
@@ -105,5 +125,5 @@ while running:
                 screen.blit(cross, (x * 200 + 10, y * 200 + 10))
             elif value == "o":
                 screen.blit(circle, (x * 200 + 10, y * 200 + 10))
-    #TODO: Välja vilken man vill flytta och även flytta motståndaren 
+ 
     pg.display.flip()
