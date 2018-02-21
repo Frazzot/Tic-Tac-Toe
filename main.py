@@ -32,6 +32,13 @@ gameboard = [[" ", " ", " "],
              [" ", " ", " "],
              [" ", " ", " "]]
 
+vert_gameboard = [[gameboard[0][0], gameboard[1][0], gameboard[2][0]],
+                  [gameboard[1][0], gameboard[1][1], gameboard[1][2]],
+                  [gameboard[2][0], gameboard[2][1], gameboard[2][2]]]
+
+diagonals = [[gameboard[0][0], gameboard[1][1], gameboard[2][2]],
+             [gameboard[0][2], gameboard[1][1], gameboard[2][0]]]
+
 crosses_placed = 0
 is_selecting = True
 # gameboard[y][x]
@@ -51,6 +58,7 @@ while running:
                 gameboard_x = x // 200
                 gameboard_y = y // 200
                 if crosses_placed < 3:
+                    # kolla om man vunnit (3 i rad)
                     if gameboard[gameboard_y][gameboard_x] == " ":
                         gameboard[gameboard_y][gameboard_x] = "x"
                         crosses_placed += 1
@@ -86,12 +94,9 @@ while running:
                         gameboard[c_y_NEW][c_x_NEW] = "o"
                         print(gameboard)
 
-
-#TODO: Fixa så computer och x inte kan placera spelare på varandra (while loop kolla tills man hittar o)
 #TODO: Fixa så när man vinner börjar den om och en ruta kommer upp som visar att man har vunnit
 #TODO: Fixa svårighetsgrader och även ett inteface för att välja (enkel- random, mellan- och svår- )
-                        
-
+    
     screen.fill(BLACK)
     screen.blit(grid, (0,0))
     for y, row in enumerate(gameboard):
