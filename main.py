@@ -57,23 +57,40 @@ while running:
                         placed = False
                         while not placed:
                             computer_x = random.randint(0, 2)
-                            computer_y  = random.randint(0, 2)
+                            computer_y = random.randint(0, 2)
                             if gameboard[computer_y][computer_x] == " ":
                                 gameboard[computer_y][computer_x] = "o"
                                 placed = True
                         print(gameboard)
+                # FLyttar, tar bort och ändrar position på spelare
                 else:
                     if is_selecting:
                         if gameboard[gameboard_y][gameboard_x] == "x":
                             gameboard[gameboard_y][gameboard_x] = " "
                             is_selecting = False
                     else:
+                        if gameboard[gameboard_y][gameboard_x] != " ":
+                            continue
                         gameboard[gameboard_y][gameboard_x] = "x"
                         is_selecting = True
-                    # Hämta nytt input från musen (klickar på vilken man vill flytta sedan klickar på rutan som ska flyttas till)
+                        while gameboard[computer_y][computer_x] != "o":
+                            computer_x = random.randint(0, 2)
+                            computer_y = random.randint(0, 2)
+                        gameboard[computer_y][computer_x] = " "
+                        c_x_NEW = random.randint(0, 2)
+                        c_y_NEW = random.randint(0, 2)
+                        while gameboard[c_y_NEW][c_x_NEW] != " " or (c_x_NEW == computer_x and c_y_NEW == computer_y):
+                            # if x och o är på samma plats
+                            c_x_NEW = random.randint(0, 2)
+                            c_y_NEW = random.randint(0, 2)
+                        gameboard[c_y_NEW][c_x_NEW] = "o"
+                        print(gameboard)
 
-#TODO: Kolla upp varför gameboard_x ej är definerat
 
+#TODO: Fixa så computer och x inte kan placera spelare på varandra (while loop kolla tills man hittar o)
+#TODO: Fixa så när man vinner börjar den om och en ruta kommer upp som visar att man har vunnit
+#TODO: Fixa svårighetsgrader och även ett inteface för att välja (enkel- random, mellan- och svår- )
+                        
 
     screen.fill(BLACK)
     screen.blit(grid, (0,0))
